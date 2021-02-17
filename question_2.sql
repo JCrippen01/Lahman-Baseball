@@ -5,7 +5,12 @@
 SELECT CONCAT(namefirst,' ', namelast) AS name, height
 FROM people
 ORDER BY height;
--- Eddie Gaedel is 4"3
+-- Eddie Gaedel is 43"
+
+SELECT MIN(height), namefirst
+FROM people
+GROUP BY height, namefirst
+ORDER BY height;
 
 -- How many games did he play in
 SELECT CONCAT(namefirst,' ', namelast) AS name, people.playerid, height, G_all
@@ -20,5 +25,6 @@ FROM people
 		ON people.playerid = appearances.playerid
 	INNER JOIN teams 
 		ON teams.teamid = appearances.teamid
-ORDER BY height;
+ORDER BY height
+LIMIT 1;
 -- Eddie played for the St. Louis Browns
