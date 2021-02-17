@@ -13,5 +13,7 @@ from people as p left join appearances as a
 	left join batting as b
 	on p.playerid = b.playerid
 where	a.yearid = 2016
+		and b.yearid =2016
 		and cast(b.sb as numeric) + cast(b.cs as numeric) >= 20
 order by percentage_stole desc;
+
