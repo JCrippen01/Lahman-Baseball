@@ -6,7 +6,7 @@ salary earned. Which Vanderbilt player earned the most money in the majors? */
 SELECT 
 	namefirst AS first_name, 
 	namelast AS last_name,
-	SUM(salary) AS total_major_league_salary
+	SUM(salary::decimal::money) AS total_major_league_salary
 FROM people
 JOIN collegeplaying
 USING(playerid) 
