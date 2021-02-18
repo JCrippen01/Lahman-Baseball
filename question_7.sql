@@ -80,7 +80,7 @@ USING(yearid)
 ORDER BY yearid)
 SELECT
 	COUNT(CASE WHEN cs.most_wins_team = cs.ws_wins_team THEN 1 END) AS count_most_wins_also_ws_winner,
-	CONCAT(ROUND(100*(COUNT(CASE WHEN cs.most_wins_team = cs.ws_wins_team THEN 1 END)) / (MAX(yearid)-MIN(yearid)),2),'%') AS percentage_most_wins_also_ws_winner
+	CONCAT(ROUND(100*(COUNT(CASE WHEN cs.most_wins_team = cs.ws_wins_team THEN 1 END)::decimal) / (COUNT(Distinct yearid)::decimal),2),'%') AS percentage_most_wins_also_ws_winner
 FROM combined_stats AS cs;
 
 
