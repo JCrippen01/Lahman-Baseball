@@ -4,7 +4,7 @@
 SELECT yearid, teamid, MAX(w) as max_wins
 FROM teams
 WHERE 
-	yearid >= 1970 AND yearid <=2016
+	yearid BETWEEN 1970 AND 2016
 	AND teamid NOT IN (
 	SELECT teamid
 	FROM teams
@@ -36,7 +36,7 @@ LIMIT 1;
 wins is from Detroit Tigers in 2003 with 43 wins*/
 SELECT yearid, teamid, MIN(w) as min_wins
 FROM teams
-WHERE BETWEEN 1970 AND 1980 OR yearid BETWEEN 1982 AND 2016)
+WHERE (yearid BETWEEN 1970 AND 1980 OR yearid BETWEEN 1982 AND 2016)
 	AND teamid IN (
 	SELECT teamid
 	FROM teams
@@ -80,7 +80,7 @@ USING(yearid)
 ORDER BY yearid)
 SELECT
 	COUNT(CASE WHEN cs.most_wins_team = cs.ws_wins_team THEN 1 END) AS count_most_wins_also_ws_winner,
-	CONCAT(ROUND((100*COUNT(CASE WHEN cs.most_wins_team = cs.ws_wins_team THEN 1 END) / COUNT(DISTINCT yearid)::decimal),2),'%') AS percentage_most_wins_also_ws_winner
+	CONCAT(ROUND(100*(COUNT(CASE WHEN cs.most_wins_team = cs.ws_wins_team THEN 1 END)) / (MAX(yearid)-MIN(yearid)),2),'%') AS percentage_most_wins_also_ws_winner
 FROM combined_stats AS cs;
 
 
