@@ -27,7 +27,7 @@ WITH calculation AS (
 			yearid
 		FROM fielding
 		WHERE yearid = '2016')
-SELECT position, SUM(putout) AS number_putout
+SELECT position, SUM(putout) AS number_putouts
 FROM calculation
 GROUP BY position;
 

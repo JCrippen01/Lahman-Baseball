@@ -27,4 +27,17 @@ FROM people
 		ON teams.teamid = appearances.teamid
 ORDER BY height
 LIMIT 1;
+
+
+
+-- TOBIAS answer
+SELECT ppl.namefirst, ppl.namelast, app.g_all AS games, t.name AS team
+FROM people AS ppl
+LEFT JOIN appearances AS app
+ON ppl.playerid = app.playerid
+RIGHT JOIN teams AS t
+ON app.teamid = t.teamid
+	WHERE ppl.height IN (SELECT MIN(height) FROM people)
+	AND t.yearid = '1951';
+
 -- Eddie played for the St. Louis Browns
