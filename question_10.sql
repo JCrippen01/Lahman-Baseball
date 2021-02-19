@@ -18,10 +18,43 @@ WHERE wswin = 'Y'
 
 SELECT *
 FROM collegeplaying
---playerif, schoolid, yearid
+--playerid, schoolid, yearid
 
-SELECT s.schoolid, s.schoolname, s.schoolstate, cp.playerid, cp.schoolid, cp.yearid
-FROM schools as s
-INNER JOIN collegeplaying as cp ON cp.schoolid = s.schoolid
+select * from people 
+-- playerid, namefirst, namelast
+
+SELECT s.schoolid, s.schoolname, s.schoolstate, cp.playerid, CONCAT(namefirst, ' ', namelast) as player_name, teams.wswin, cp.schoolid, cp.yearid
+FROM schools as s	INNER JOIN collegeplaying as cp ON cp.schoolid = s.schoolid
+					INNER JOIN teams ON teams.yearid = cp.yearid
+					INNER JOIN people ON people.playerid = cp.playerid
 WHERE s.schoolstate = 'TN'
-INNER JOIN teams ON teams.yearid = cp.yearid
+AND wswin = 'Y';
+-- this works
+
+
+SELECT CONCAT(namefirst, ' ', namelast) as player_name, cp.yearid
+FROM schools as s	INNER JOIN collegeplaying as cp ON cp.schoolid = s.schoolid
+					INNER JOIN teams ON teams.yearid = cp.yearid
+					INNER JOIN people ON people.playerid = cp.playerid
+WHERE s.schoolstate = 'TN'
+AND wswin = 'Y'
+-- TN won the world series 382 times between 1903 and 2011
+
+-- Which college has had the most success in the major leagues. 
+SELECT s.schoolname, CONCAT(namefirst, ' ', namelast) as player_name, teams.wswin, cp.schoolid, cp.yearid, count(schoolname) as college_win
+FROM schools as s	INNER JOIN collegeplaying as cp ON cp.schoolid = s.schoolid
+					INNER JOIN teams ON teams.yearid = cp.yearid
+					INNER JOIN people ON people.playerid = cp.playerid
+WHERE s.schoolstate = 'TN'
+AND wswin = 'Y'
+GROUP BY s.schoolname, player_name, teams.wswin, cp.schoolid, cp.yearid
+ORDER BY s.schoolname;
+
+SELECT s.schoolname, CONCAT(namefirst, ' ', namelast) as player_name, teams.wswin, cp.schoolid, cp.yearid, count(schoolname) as college_win
+FROM schools as s	INNER JOIN collegeplaying as cp ON cp.schoolid = s.schoolid
+					INNER JOIN teams ON teams.yearid = cp.yearid
+					INNER JOIN people ON people.playerid = cp.playerid
+WHERE s.schoolstate = 'TN'
+AND wswin = 'Y'
+GROUP BY s.schoolname, player_name, teams.wswin, cp.schoolid, cp.yearid
+ORDER BY s.schoolname;
